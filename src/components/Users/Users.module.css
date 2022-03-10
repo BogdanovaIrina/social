@@ -1,0 +1,44 @@
+.main {
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.part {
+    margin-top: 20px;
+    border: 1px solid darkgray;
+}
+.but {
+    margin-top: 20px;
+    margin-left: 10px;
+    width: 80px;
+    height: 30px;
+    border: none;
+}
+.but:hover {
+    background-color: #f0ebe6;
+}
+.flexCon {
+    display: flex;
+    justify-content: space-between;
+}
+.name {
+    font-size: 18px;
+}
+.status {
+    font-size: 20px;
+    animation: blink 2s linear infinite;
+    font-weight: bold;
+}
+
+@keyframes blink {
+    0% { color: #027cba; }
+    50% { color: black; }
+    100% { color: #027cba; }
+}
+.text {
+    margin-right: 20px;
+}
+
+.selected {
+    font-weight: bold;
+}

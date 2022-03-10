@@ -1,0 +1,17 @@
+.nav {
+    background-color: #027cba;
+    width: 200px;
+    margin-top: 20px;
+    text-decoration: none;
+}
+.item {
+    color: white;
+    text-decoration: none;
+}
+.active {
+    color: yellow;
+    text-decoration: none;
+}
+a {
+    text-decoration: none;
+}

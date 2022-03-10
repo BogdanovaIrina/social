@@ -1,0 +1,18 @@
+.dialogs {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.dialogsItems {
+    padding: 10px;
+    text-decoration: none;
+
+}
+.messages > a {
+
+}
+.text {
+    display: flex;
+    justify-content: flex-end;
+}
+
