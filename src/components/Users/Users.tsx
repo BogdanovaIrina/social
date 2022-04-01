@@ -2,7 +2,7 @@ import React from 'react';
 import classes from "../Profile/MyPosts/Post/Post.module.css";
 import src from "../../images/avatar.png";
 import s from './Users.module.css'
-import {InitialStateUserType} from "../../redux/UserReducer";
+import {InitialStateUserType} from "../../redux/user-reducer";
 import {NavLink} from "react-router-dom";
 
 type PropsType = {
@@ -22,7 +22,7 @@ export const Users = (props:PropsType) => {
 
     let pagenumber = []
 
-    for (let i = 1; i<=20; i++) {pagenumber.push(i)}
+    for (let i = 1; i<=48; i++) {pagenumber.push(i)}
 
 
     return (

@@ -3,6 +3,9 @@ import classes from './Dialogs.module.css'
 import {Name} from "./DialogsItem/Name";
 import {Messages} from "./Message/Messages";
 import {DialogsType} from "./DialogsContainer";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {lengthC, required} from "../../utils/validators/validators";
+import {Textarea} from "../common/FormControl/FormControl";
 
 
 function Dialogs(props:DialogsType) {
@@ -13,12 +16,9 @@ function Dialogs(props:DialogsType) {
 
     let message = state.messages.map(m => <Messages key = {m.id} value={m.message}/>)
 
-    let newMessage = state.newMessage
-
-    const addMessage = () => props.itog()
-
-    const changeHandler = (e:ChangeEvent<HTMLTextAreaElement>) => {props.vvod(e.currentTarget.value)}
-
+    const addNewMessage = (value:any) => {
+        props.itog(value.message)
+    }
 
     return (
         <>
@@ -30,12 +30,27 @@ function Dialogs(props:DialogsType) {
                     {message}
                 </div>
             </div>
-            <div className={classes.text}>
-                <textarea placeholder="Введите что-нибудь" value={newMessage} onChange={changeHandler} />
-                <button onClick={addMessage}>Отправить</button>
-            </div>
+            <FormRedux onSubmit={addNewMessage}/>
         </>
     );
 }
 
 export default Dialogs;
+
+
+type FormDataType = {
+    message:string
+    onSubmit:(value:any) => void
+}
+let maxlength100 = lengthC(100)
+
+const Form: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <Field component={Textarea} name={'message'} placeholder={'Message'} validate={[required, maxlength100]}/>
+            <button>Отправить</button>
+        </form>
+    )
+}
+
+const FormRedux = reduxForm<FormDataType>({form: 'forma'})(Form)

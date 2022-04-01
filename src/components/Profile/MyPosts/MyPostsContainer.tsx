@@ -2,15 +2,14 @@ import {connect} from "react-redux";
 import {MyPosts} from "./MyPosts";
 import {Dispatch} from "redux";
 import {reducersType} from "../../../redux/store";
-import {addPostAC, changePostAC, InitialStateProfileType} from "../../../redux/ProfileReducer";
+import {addPostAC, InitialStateProfileType} from "../../../redux/profile-reducer";
 
 type MapStateToPropsType = {
         posts:InitialStateProfileType
 }
 
 type MapDispatchToPropsType = {
-    vvod: (text:string) => void
-    itog: () => void
+    itog: (newPost:string) => void
 }
 
 export type MyPostsType = MapStateToPropsType & MapDispatchToPropsType
@@ -23,11 +22,8 @@ let mapStateToProps = (state:reducersType) : MapStateToPropsType => {
 
 let mapDispatchToProps = (dispatch: Dispatch) : MapDispatchToPropsType  => {
     return {
-        vvod : (text) => {
-            dispatch(changePostAC(text))
-        },
-        itog : () => {
-            dispatch(addPostAC())
+        itog : (newPost:string) => {
+            dispatch(addPostAC(newPost))
         }
     }
 }

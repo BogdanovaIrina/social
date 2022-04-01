@@ -123,6 +123,7 @@ export type followingType = ReturnType<typeof following>
 //thunk
 export const getUsers= (currentpage:number, pagesize:number) => (dispatch:Dispatch) => {
     dispatch(loading(true))
+    dispatch(changeCurrentPage(currentpage))
     usersAPI.getUsers(currentpage, pagesize).then(data => {
         dispatch(loading(false))
         dispatch(setUser(data.items))

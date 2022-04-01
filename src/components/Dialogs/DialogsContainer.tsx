@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import Dialogs from "./Dialogs";
-import {addMessageAC, changeMessageAC, InitialStateDialogType} from "../../redux/DialogReducer";
+import {addMessageAC, InitialStateDialogType} from "../../redux/dialog-reducer";
 import {reducersType} from "../../redux/store";
 import {compose, Dispatch} from "redux";
 import React from "react";
@@ -11,8 +11,7 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    vvod: (text:string) => void
-    itog: () => void
+    itog: (newMessage:string) => void
 }
 
 export type DialogsType = MapStateToPropsType & MapDispatchToPropsType
@@ -25,11 +24,8 @@ let mapStateToProps = (state:reducersType) : MapStateToPropsType => {
 
 let mapDispatchToProps = (dispatch: Dispatch) : MapDispatchToPropsType => {
      return {
-         vvod : (text) => {
-            dispatch(changeMessageAC(text))
-         },
-         itog : () => {
-             dispatch(addMessageAC())
+         itog : (newMessage:string) => {
+             dispatch(addMessageAC(newMessage))
          }
     }
 }

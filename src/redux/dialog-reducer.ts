@@ -19,50 +19,33 @@ const InitialState:InitialStateDialogType  = {
             {message: 'Good Hi', id: 2},
             {message: 'Bad Hi', id: 3},
             {message: 'Some Hi', id: 4}
-        ],
-        newMessage: ''
+        ]
 }
 
 export type InitialStateDialogType  = {
     names : Array<NameType>
     messages: Array<MessageType>
-    newMessage: string
 }
 
 export const dialogsReducer = (state:InitialStateDialogType = InitialState, action:DialogActionType):InitialStateDialogType  => {
     switch (action.type) {
-        case "ADD-MESSAGE":
-            return {
-                ...state,
-                newMessage : action.payload.Message
-            }
         case "ADD-FULL-MESSAGE":
             return {
                 ...state,
-                messages: [...state.messages, {message: state.newMessage, id: 5}],
-                newMessage:''
+                messages: [...state.messages, {message: action.newMessage, id: 5}]
             }
         default: return state
     }
 }
-export const changeMessageAC = (Message:string)=> {
-    return {
-        type:"ADD-MESSAGE",
-        payload: {
-            Message
-        }
-    } as const
-}
 
-export const addMessageAC = () => {
+export const addMessageAC = (newMessage:string) => {
     return {
         type:"ADD-FULL-MESSAGE",
+        newMessage
     } as const
 }
 
 
 export type addMessageACType = ReturnType<typeof addMessageAC>
 
-export type changeMessageACType = ReturnType<typeof changeMessageAC>
-
-export type DialogActionType = addMessageACType | changeMessageACType
+export type DialogActionType = addMessageACType

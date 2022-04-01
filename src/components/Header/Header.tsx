@@ -9,8 +9,9 @@ export function Header(props:any) {
         <header className={classes.head}>
             <img src={imageSrc} alt='Logotip'/>
             <div className={s.login}>
-                {props.isAuth? props.login
-                :<NavLink to='/login'>Profile</NavLink>
+                {props.isAuth
+                    ? <div>{props.login} - <button onClick={props.logout}>Log out</button></div>
+                    :<NavLink to='/login'>Profile</NavLink>
                 }
             </div>
     </header>)

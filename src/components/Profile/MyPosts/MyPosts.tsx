@@ -1,32 +1,53 @@
-import React, {ChangeEvent} from "react";
+import React, {memo} from "react";
 import Post from "./Post/Post";
 import classes from "./MyPosts.module.css";
 import {MyPostsType} from "./MyPostsContainer";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {lengthC, required} from "../../../utils/validators/validators";
+import {Textarea} from "../../common/FormControl/FormControl";
 
 
-export function MyPosts(props: MyPostsType) {
+export const MyPosts = memo((props:MyPostsType) => {
+
+    // shouldComponentUpdate(nextProps: Readonly<MyPostsType>, nextState: Readonly<{}>): boolean {
+    //     return nextProps !== this.props || nextState !== this.state
+    // }
 
     let state = props.posts
 
     let postsElements = state.posts.map(m => <Post key = {m.id} post={m.post} likesCount = {m.likesCount}/>)
 
-    let newMessage = state.newPost
 
-    const addPost = () => props.itog()
+    const addPost = (value:any) => props.itog(value.message)
 
-
-    const changeHandler = (e:ChangeEvent<HTMLTextAreaElement>) => {props.vvod(e.currentTarget.value)}
 
     return (
         <div>
             <div className={classes.myPosts}>
                 <h3>My posts</h3>
-                <div><textarea  value={newMessage} onChange={changeHandler} />
-                    <button className={classes.myButton} onClick={addPost}>Add post</button></div>
+                <FormRedux onSubmit={addPost}/>
                 <div>
                     {postsElements}
                 </div>
             </div>
         </div>
     )
+})
+
+type FormDataType = {
+    message:string
+    onSubmit:(value:any) => void
 }
+let maxlength10 = lengthC(10)
+
+const Form: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <Field component={Textarea} name={'message'} placeholder={'Message'} validate={[required, maxlength10]}/>
+            <button>Отправить</button>
+        </form>
+    )
+}
+
+const FormRedux = reduxForm<FormDataType>({form: 'forma'})(Form)

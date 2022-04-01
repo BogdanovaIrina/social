@@ -8,7 +8,6 @@ export type PostType = {
 }
 
 const InitialState: InitialStateProfileType = {
-        newPost: '',
         posts : [
             {id: 1, post: 'Hi, how are you', likesCount: 3},
             {id: 2, post: "I'm fine and you" , likesCount: 5}
@@ -19,7 +18,6 @@ const InitialState: InitialStateProfileType = {
 
 export type InitialStateProfileType  = {
     posts: Array<PostType>
-    newPost:string
     profile:string | null
     status: string
 
@@ -28,16 +26,11 @@ export type InitialStateProfileType  = {
 export const profileReducer = (state= InitialState, action:ProfileActionType):InitialStateProfileType => {
 
     switch (action.type) {
-        case "ADD-TEXT":
-            return {
-                ...state,
-                newPost  : action.payload.Message
-            }
+
         case "ADD-FULL-POST":
             return {
                 ...state,
-                newPost:"",
-                posts: [...state.posts, {id: 3, post: state.newPost, likesCount: 0}]
+                posts: [...state.posts, {id: 3, post: action.newPost, likesCount: 0}]
             }
         case "USER-PROFILE":
             return {
@@ -51,18 +44,11 @@ export const profileReducer = (state= InitialState, action:ProfileActionType):In
         default: return state
     }
 }
-export const changePostAC = (Message:string)=> {
-    return {
-        type:"ADD-TEXT",
-        payload: {
-            Message
-        }
-    } as const
-}
 
-export const addPostAC = () => {
+export const addPostAC = (newPost:string) => {
     return {
         type:"ADD-FULL-POST",
+        newPost
     } as const
 }
 
@@ -88,13 +74,11 @@ export const setStatus = (status:string)=> {
 
 export type AddPostACType = ReturnType<typeof addPostAC>
 
-export type ChangePostACType = ReturnType<typeof changePostAC>
-
 export type setUserProfileType = ReturnType<typeof setUserProfile>
 
 export type setStatusType  = ReturnType<typeof setStatus>
 
-export type ProfileActionType = AddPostACType | ChangePostACType | setUserProfileType | setStatusType
+export type ProfileActionType = AddPostACType | setUserProfileType | setStatusType
 
 //thunk
 export const getUserProfile = (userId:string) => (dispatch:Dispatch) => {

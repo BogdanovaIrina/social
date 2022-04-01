@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Post.module.css';
 import src from '../../../../images/avatar.png';
-import {PostType} from "../../../../redux/ProfileReducer";
+import {PostType} from "../../../../redux/profile-reducer";
 
 function Post(props:PostType) {
     return (

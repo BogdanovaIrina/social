@@ -1,38 +1,49 @@
 import React from 'react';
 import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
-import {BrowserRouter, Route} from "react-router-dom";
+import {Route, withRouter} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import {HeaderContainer} from "./components/Header/HeaderContainer";
-import {Login} from "./components/Login/Login";
+import Login from "./components/Login/Login";
+import {connect} from "react-redux";
+import {compose} from "redux";
+import {initialisedApp} from "./redux/app-reducer";
+import {reducersType} from "./redux/store";
 
-function App() {
-
-  return (
-      <BrowserRouter>
-          <div className='app-wrapper'>
-              <HeaderContainer/>
-              <div className='second-wrapper'>
-                  <Navbar/>
-                  <div className='app-wrapper-content'>
-                      {/*<Routes>*/}
-                      {/*в новой версии вместо render element и не стрелочная функция, а просто компонета*/}
-                          <Route path='/profile/:userId'
-                                 render={() => <ProfileContainer />} />
-                          <Route path='/dialogs'
-                                 render={() =><DialogsContainer />} />
-                          <Route path='/users'
-                                 render={() => <UsersContainer />} />
-                          <Route path='/login'
-                             render={() => <Login />} />
-                      {/*</Routes>*/}
-                  </div>
-              </div>
-          </div>
-      </BrowserRouter>
-  );
+interface MyProps {
+    initialisedApp: () => void
+    initialized:boolean
 }
-export default App;
+
+class App extends React.Component<MyProps> {
+
+    componentDidMount() {
+    this.props.initialisedApp()
+    }
+
+    render() {
+        if (!this.props.initialized) {return 'OOOps'}
+    return (
+        <div className='app-wrapper'>
+                <HeaderContainer/>
+                <div className='second-wrapper'>
+                    <Navbar/>
+                    <div className='app-wrapper-content'>
+                        <Route path='/profile/:userId' render={() => <ProfileContainer />} />
+                        <Route path='/dialogs' render={() =><DialogsContainer />} />
+                        <Route path='/users' render={() => <UsersContainer />} />
+                        <Route path='/login' render={() => <Login />} />
+                    </div>
+                </div>
+        </div>
+    )
+}
+}
+
+const mapStateToProps = (state:reducersType) => ({initialized: state.app.initialized})
+
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {initialisedApp}), withRouter)(App)
 
