@@ -11,7 +11,6 @@ type FormDataType = {
     login:string
     password: string
     rememberMe:boolean
-
 }
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {

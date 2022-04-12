@@ -84,7 +84,7 @@ export type ProfileActionType = AddPostACType | setUserProfileType | setStatusTy
 export const getUserProfile = (userId:string) => (dispatch:Dispatch) => {
     usersAPI.getProfile(userId)
             .then(response => {
-                          dispatch(setUserProfile(response.data))
+                dispatch(setUserProfile(response.data))
     })
 }
 

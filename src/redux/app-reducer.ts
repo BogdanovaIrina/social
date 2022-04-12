@@ -11,12 +11,11 @@ export const appReducer = (state= InitialState, action:ActionType):InitialStateT
 
     switch (action.type) {
 
-
         default: return state
     }
 }
 
-const initialized = () => ({type:"SUCCESS"}as const)
+const initialized = () => ({type:"SUCCESS"} as const)
 
 type ActionType = ReturnType<typeof initialized>
 
